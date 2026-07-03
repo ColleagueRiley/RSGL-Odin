@@ -307,7 +307,7 @@ view :: struct #raw_union {
 	view3D : view3D
 } 
 
-@(default_calling_convention="c", link_prefix="")
+@(default_calling_convention="c", link_prefix="RSGL_")
 foreign native {
     /*
     *********************
