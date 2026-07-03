@@ -402,6 +402,39 @@ typedef struct RSGL_rawVerts {
 	size_t vert_count;
 } RSGL_rawVerts;
 
+/*
+*******
+RSGL_view
+*******
+*/
+
+typedef enum RSGL_viewType {
+	RSGL_viewTypeNone = 0,
+	RSGL_viewType2D,
+	RSGL_viewType3D,
+} RSGL_viewType;
+
+typedef struct RSGL_view2D {
+	RSGL_viewType type;
+	RSGL_vec3D offset;
+	RSGL_vec3D target;
+    float rotation;
+    float zoom;
+} RSGL_view2D;
+
+/* RSGL translation */
+typedef struct RSGL_view3D {
+	RSGL_viewType type;
+	RSGL_vec3D pos;
+	RSGL_vec3D target;
+    RSGL_vec3D up;
+} RSGL_view3D;
+
+typedef union RSGL_view {
+	RSGL_viewType type;
+	RSGL_view2D view2D;
+	RSGL_view3D view3D;
+} RSGL_view;
 
 /*
 *********************
@@ -586,15 +619,11 @@ RSGLDEF i32 RSGL_drawCube(RSGL_renderer* renderer, RSGL_cube cube);
 RSGLDEF i32 RSGL_drawTriangleOutline(RSGL_renderer* renderer, RSGL_vec3D triangle[3], u32 thickness);
 
 RSGLDEF i32 RSGL_drawRectOutline(RSGL_renderer* renderer, RSGL_rect r, u32 thickness);
-RSGLDEF i32 RSGL_drawRectOutline(RSGL_renderer* renderer, RSGL_rect r, u32 thickness);
 
-RSGLDEF i32 RSGL_drawRoundRectOutline(RSGL_renderer* renderer, RSGL_rect r, RSGL_vec2D rounding, u32 thickness);
 RSGLDEF i32 RSGL_drawRoundRectOutline(RSGL_renderer* renderer, RSGL_rect r, RSGL_vec2D rounding, u32 thickness);
 
 RSGLDEF i32 RSGL_drawPolygonOutline(RSGL_renderer* renderer, RSGL_rect r, u32 sides, u32 thickness);
-RSGLDEF i32 RSGL_drawPolygonOutline(RSGL_renderer* renderer, RSGL_rect r, u32 sides, u32 thickness);
 
-RSGLDEF i32 RSGL_drawArcOutline(RSGL_renderer* renderer, RSGL_rect o, RSGL_vec2D arc, u32 thickness);
 RSGLDEF i32 RSGL_drawArcOutline(RSGL_renderer* renderer, RSGL_rect o, RSGL_vec2D arc, u32 thickness);
 
 RSGLDEF i32 RSGL_drawOvalOutline(RSGL_renderer* renderer, RSGL_rect o, u32 thickness);
@@ -604,34 +633,6 @@ RSGLDEF i32 RSGL_drawOvalOutline(RSGL_renderer* renderer, RSGL_rect o, u32 thick
 RSGL_view
 *******
 */
-
-typedef enum RSGL_viewType {
-	RSGL_viewTypeNone = 0,
-	RSGL_viewType2D,
-	RSGL_viewType3D,
-} RSGL_viewType;
-
-typedef struct RSGL_view2D {
-	RSGL_viewType type;
-	RSGL_vec3D offset;
-	RSGL_vec3D target;
-    float rotation;
-    float zoom;
-} RSGL_view2D;
-
-/* RSGL translation */
-typedef struct RSGL_view3D {
-	RSGL_viewType type;
-	RSGL_vec3D pos;
-	RSGL_vec3D target;
-    RSGL_vec3D up;
-} RSGL_view3D;
-
-typedef union RSGL_view {
-	RSGL_viewType type;
-	RSGL_view2D view2D;
-	RSGL_view3D view3D;
-} RSGL_view;
 
 RSGLDEF RSGL_mat4 RSGL_view_getMatrix(const RSGL_view* view);
 

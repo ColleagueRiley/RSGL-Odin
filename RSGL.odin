@@ -279,7 +279,35 @@ rawVerts :: struct {
 	vert_count : c.size_t
 }
 
-@(default_calling_convention="c", link_prefix="RSGL_")
+viewType :: enum {
+	viewTypeNone = 0,
+	viewType2D,
+	viewType3D,
+}
+
+view2D :: struct{
+	type : viewType,
+	offset : vec3D,
+	target : vec3D,
+    rotation : c.float,
+    zoom: c.float
+}
+
+/* RSGL translation */
+view3D :: struct {
+	type : viewType,
+	pos : vec3D,
+	target : vec3D,
+    up : vec3D 
+}
+
+view :: struct #raw_union {
+	type : viewType,
+	view2D : view2D,
+	view3D : view3D
+} 
+
+@(default_calling_convention="c", link_prefix="")
 foreign native {
     /*
     *********************
@@ -403,4 +431,55 @@ foreign native {
     */
 
     drawRawVerts :: proc(renderer : ^renderer, data : ^rawVerts) -> i32 ---
+
+    /*
+    *******
+    draw primitives
+    *******
+    */
+    /* 2D shape drawing */
+    /* in the function names, F means float */
+
+    drawPoint :: proc(renderer : ^renderer, p : vec2D) -> i32 ---
+
+    drawRect :: proc(renderer : ^renderer, r : rect) -> i32 ---
+
+    drawRoundRect :: proc(renderer : ^renderer, r : rect, rounding : vec2D) -> i32 ---
+
+    drawPolygon :: proc(renderer : ^renderer, r : rect, sides : u32) -> i32 ---
+
+    drawArc :: proc(renderer : ^renderer, o : rect, arc : vec2D) -> i32 ---
+
+    drawOval :: proc(renderer : ^renderer, o : rect) -> i32 ---
+
+    drawLine :: proc(renderer : ^renderer, p1 : vec2D, p2 : vec2D, thickness : u32) -> i32 ---
+
+    /* 3D objects */
+    drawTriangle :: proc(renderer : ^renderer, triangle : [3]vec3D) -> i32 ---
+    drawPoint3D :: proc(renderer : ^renderer, p : vec3D) -> i32 ---
+    drawLine3D :: proc(renderer : ^renderer, p1 : vec3D, p2 : vec3D, thickness : u32) -> i32 ---
+    drawCube :: proc(renderer : ^renderer, cube : cube) -> i32 ---
+
+    /* 2D outlines */
+
+    /* thickness means the thickness of the line */
+    drawTriangleOutline :: proc(renderer : ^renderer, triangle : [3]vec3D, thickness : u32) -> i32 ---
+
+    drawRectOutline :: proc(renderer : ^renderer, r : rect, thickness : u32) -> i32 ---
+
+    drawRoundRectOutline :: proc(renderer : ^renderer, r : rect, rounding : vec2D, thickness : u32) -> i32 ---
+
+    drawPolygonOutline :: proc(renderer : ^renderer, r : rect, sides : u32, thickness : u32) -> i32 ---
+
+    drawArcOutline :: proc(renderer : ^renderer, o : rect, arc : vec2D, thickness : u32) -> i32 ---
+
+    drawOvalOutline :: proc(renderer : ^renderer, o : rect, thickness : u32) -> i32 ---
+
+    /*
+    *******
+    view
+    *******
+    */
+
+    view_getMatrix :: proc(view : ^view) -> mat4 --- 
 }
