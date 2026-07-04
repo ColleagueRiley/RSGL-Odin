@@ -974,7 +974,7 @@ RSGL_programInfo RSGL_renderer_createProgram(RSGL_renderer* renderer, RSGL_progr
 	RSGL_programInfo info;
 	RSGL_MEMSET(&info, 0, sizeof(info));
 
-	if (blob->fragment == NULL || blob->vertex == NULL) {
+	if (renderer->proc.createProgram != NULL && (blob->fragment == NULL || blob->vertex == NULL)) {
 		RSGL_programBlob pBlob = RSGL_renderer_defaultBlob(renderer);
 		renderer->defaultProgram = RSGL_renderer_createProgram(renderer, &pBlob);
 
