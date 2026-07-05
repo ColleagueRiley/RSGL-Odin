@@ -31,18 +31,21 @@
     #define RSGL_MAX_VERTS [number of verts] - set max number of verts to be allocated (global, not per batch)
 */
 #include <stdint.h>
-#ifndef RSGL_MAX_BATCHES
-#define RSGL_MAX_BATCHES 2028
-#endif
-#ifndef RSGL_MAX_VERTS
-#define RSGL_MAX_VERTS 8192
-#endif
 
 #ifndef RSGL_MALLOC
 #include <stdlib.h>
 #define RSGL_MALLOC malloc
 #define RSGL_REALLOC realloc
 #define RSGL_FREE free
+#endif
+
+#ifndef RSGL_ASSERT
+	#include <assert.h>
+	#define RSGL_ASSERT(x) assert(x)
+#endif
+
+#ifndef RSGL__STATIC_ASSERT
+	#define RSGL_STATIC_ASSERT(check_name, x) typedef char RSGL_check_##check_name[(x) ? 1 : -1];
 #endif
 
 #ifndef RSGL_SIN
@@ -71,18 +74,30 @@
 #endif
 #endif
 
+#include <stddef.h>
+
 #ifndef RSGL_INT_DEFINED
-    #define RSGL_INT_DEFINED
-	#if defined(_MSC_VER) || defined(__SYMBIAN32__)
-		typedef unsigned char 	u8;
-		typedef signed char		i8;
-		typedef unsigned short  u16;
-		typedef signed short 	i16;
-		typedef unsigned int 	u32;
-		typedef signed int		i32;
-		typedef unsigned long long	u64;
-		typedef signed   long long	i64;
-	#else
+	#ifdef RSGL_USE_INT /* optional for any system that might not have stdint.h */
+		#include <limits.h>
+		typedef unsigned char       u8;
+		typedef signed char         i8;
+		typedef unsigned short     u16;
+		typedef signed short 	   i16;
+		#if INT_MAX == 0x7FFFFFFF
+			typedef unsigned int  u32;
+			typedef signed int    i32;
+		#else
+			typedef unsigned long int  u32;
+			typedef signed long int    i32;
+		#endif
+		#if LONG_MAX == 0x7FFFFFFFFFFFFFFFL
+	typedef unsigned long u64;
+			typedef signed long   i64;
+		#else
+			typedef unsigned long long u64;
+			typedef signed long long   i64;
+		#endif
+	#else /* use stdint standard types instead of c "standard" types */
 		#include <stdint.h>
 
 		typedef uint8_t     u8;
@@ -94,17 +109,30 @@
 		typedef uint64_t   u64;
 		typedef int64_t    i64;
 	#endif
+	#define RSGL_INT_DEFINED
 #endif
 
-#ifndef RSGL_BOOL_DEFINED
-#define RSGL_BOOL_DEFINED
+RSGL_STATIC_ASSERT(size64, sizeof(i64) == 8)
+RSGL_STATIC_ASSERT(size32, sizeof(i32) == 4)
+RSGL_STATIC_ASSERT(size16, sizeof(i16) == 2)
 
-#include <stdbool.h>
-typedef bool RSGL_bool;
+#ifndef RSGL_BOOL_DEFINED
+	#define RSGL_BOOL_DEFINED
+
+	#include <stdbool.h>
+	typedef bool RSGL_bool;
 #endif
 
 #define RSGL_TRUE (RSGL_bool)1
 #define RSGL_FALSE (RSGL_bool)0
+
+#ifndef RSGL_MAX_BATCHES
+	#define RSGL_MAX_BATCHES 2028
+#endif
+
+	#ifndef RSGL_MAX_VERTS
+#define RSGL_MAX_VERTS 8192
+#endif
 
 typedef enum RSGL_textureFormat {
 	RSGL_formatNone = 0,
