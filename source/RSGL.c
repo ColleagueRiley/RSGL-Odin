@@ -9,8 +9,8 @@
 #define GLAD_GL_IMPLEMENTATION
 #include "glad.h"
 
-#define RSGL_GL_LOAD_WITH_GLAD
-#define RSGL_GL1_LOAD_WITH_GLAD
+#define RSGL_GL_USE_GLAD
+#define RSGL_GL1_USE_GLAD
 
 #include "RSGL/renderers/RSGL_gl1.h"
 #include "RSGL/renderers/RSGL_gl.h"
