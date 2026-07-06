@@ -29,7 +29,7 @@ RSGL$(LIB_EXT):
 ifeq ($(detected_OS),Windows)
 	.\build.bat
 else
-	make RSGL.o
+	make source/RSGL.o
 	$(AR) rcs RSGL.a source/RSGL.o
 	mv RSGL.a RSGL.a
 endif
