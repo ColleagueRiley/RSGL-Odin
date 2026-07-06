@@ -25,7 +25,7 @@ jobs:
     runs-on: macos-latest
     
     env:
-      RELEASE_NAME: RGFW-Odin-dev_macos
+      RELEASE_NAME: RSGL-Odin-dev_macos
     
     steps:
     - name: Checkout
@@ -33,7 +33,7 @@ jobs:
     
     - name: Setup Release Version
       run: |
-        echo "RELEASE_NAME=RGFW-Odin-${{ github.event.release.tag_name }}_macos" >> $GITHUB_ENV
+        echo "RELEASE_NAME=RSGL-Odin-${{ github.event.release.tag_name }}_macos" >> $GITHUB_ENV
       shell: bash
       if: github.event_name == 'release' && github.event.action == 'published'
 
@@ -54,20 +54,20 @@ jobs:
         # Extract version numbers from Makefile
         brew install grep
         
-        # Build RGFW x86_64 dynamic
-        make RGFW/RGFW.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
-        mv RGFW/RGFW.a RGFW/RGFW.a
+        # Build RSGL x86_64 dynamic
+        make RSGL/RSGL.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
+        mv RSGL/RSGL.a RSGL/RSGL.a
 
-        # Build RGFW arm64 dynamic
-        make RGFW/RGFW.a CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION"
-        mv RGFW/RGFW.a /tmp/libRGFW_arm64.a
+        # Build RSGL arm64 dynamic
+        make RSGL/RSGL.a CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION"
+        mv RSGL/RSGL.a /tmp/libRSGL_arm64.a
         
       #  make Odin/odin
       #  make ODIN=Odin/odin
 
     - name: Generate Artifacts
       run: |
-        cp -v -r ./RGFW ./build/${{ env.RELEASE_NAME }}
+        cp -v -r ./RSGL ./build/${{ env.RELEASE_NAME }}
         cd build
         tar -czvf ${{ env.RELEASE_NAME }}.tar.gz ${{ env.RELEASE_NAME }}
         
