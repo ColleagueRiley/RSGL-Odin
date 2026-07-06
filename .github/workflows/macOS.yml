@@ -31,8 +31,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
       with:
-      # Options: 'true' for top-level submodules, 'recursive' for nested ones
-      submodules: recursive  
+        submodules: recursive  
     
     - name: Setup Release Version
       run: |
