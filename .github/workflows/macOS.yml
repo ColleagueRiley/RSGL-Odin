@@ -57,11 +57,11 @@ jobs:
         brew install grep
 
         # Build RSGL arm64 dynamic
-        make RSGL.a CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION"
-        mv RSGL.a /tmp/libRSGL_arm64.a
+        make lib/RSGL.a CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION"
+        mv lib/RSGL.a /tmp/libRSGL_arm64.a
  
         # Build RSGL x86_64 dynamic
-        make RSGL.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
+        make lib/RSGL.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
 
        
       #  make Odin/odin
