@@ -4,7 +4,11 @@ ODIN = odin
 CUSTOM_CFLAGS =
 
 LIBS := -w -ggdb
-LIB_EXT = .lib
+ifeq ($(detected_OS),Windows)
+	LIB_EXT = .lib
+else
+	LIB_EXT = .a
+endif
 
 all:
 	make RSGL$(LIB_EXT)
