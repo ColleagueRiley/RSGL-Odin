@@ -8,7 +8,7 @@ Odin bindings for RSGL
 
 ## a very simple example
 ```odin
-package RSGL
+package RSGLApp
 import "RGFW-Odin/RGFW"
 import RSGL "RSGL-Odin"
 
