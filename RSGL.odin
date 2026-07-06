@@ -9,11 +9,11 @@ when ODIN_OS == .Windows {
 		}
 } else when ODIN_OS == .Darwin {
     foreign import native {
-        "RSGL.a",
+        "lib/RSGL.a",
     }
 } else when (ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD) {
     foreign import native {
-        "RSGL.a",
+        "lib/RSGL.a",
     }
 }
 
