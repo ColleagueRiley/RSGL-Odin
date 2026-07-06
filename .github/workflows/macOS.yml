@@ -55,15 +55,15 @@ jobs:
         
         # Extract version numbers from Makefile
         brew install grep
-        
-        # Build RSGL x86_64 dynamic
-        make RSGL.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
-        mv RSGL.a RSGL.a
 
         # Build RSGL arm64 dynamic
         make RSGL.a CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION"
         mv RSGL.a /tmp/libRSGL_arm64.a
-        
+ 
+        # Build RSGL x86_64 dynamic
+        make RSGL.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
+
+       
       #  make Odin/odin
       #  make ODIN=Odin/odin
 

@@ -31,7 +31,6 @@ ifeq ($(detected_OS),Windows)
 else
 	make source/RSGL.o
 	$(AR) rcs RSGL.a source/RSGL.o
-	mv RSGL.a RSGL.a
 endif
 
 clean:
