@@ -77,6 +77,10 @@ color :: struct {
     a, b, g, r : u8
 }
 
+RGBA :: proc(r, g, b, a : u8) -> color { return  {a, b, g, r} }
+RGB :: proc(r, g, b : u8) -> color { return  {255, b, g, r} }
+BGR :: proc(b, g, r : u8) -> color { return  {255, b, g, r} }
+
 mat4 :: struct {
     m : [16]c.float
 }
@@ -146,7 +150,7 @@ programInfo :: struct {
 }
 
 BATCH :: struct {
-    start : c.size_t, len : c.size_t, /* when batch starts and it's length */
+    start, len : c.size_t, /* when batch starts and it's length */
     elmStart : c.size_t, elmCount : c.size_t, /* when element batch starts and it's length */
     type : u32,
     tex : texture,
