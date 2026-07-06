@@ -30,6 +30,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
+      with:
+      # Options: 'true' for top-level submodules, 'recursive' for nested ones
+      submodules: recursive  
     
     - name: Setup Release Version
       run: |
@@ -55,12 +58,12 @@ jobs:
         brew install grep
         
         # Build RSGL x86_64 dynamic
-        make RSGL/RSGL.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
-        mv RSGL/RSGL.a RSGL/RSGL.a
+        make RSGL.a CUSTOM_CFLAGS="-target x86_64-apple-macos10.12 -DGL_SILENCE_DEPRECATION"
+        mv RSGL.a RSGL.a
 
         # Build RSGL arm64 dynamic
-        make RSGL/RSGL.a CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION"
-        mv RSGL/RSGL.a /tmp/libRSGL_arm64.a
+        make RSGL.a CUSTOM_CFLAGS="-target arm64-apple-macos11 -DGL_SILENCE_DEPRECATION"
+        mv RSGL.a /tmp/libRSGL_arm64.a
         
       #  make Odin/odin
       #  make ODIN=Odin/odin
