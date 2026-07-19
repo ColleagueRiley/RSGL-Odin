@@ -64,8 +64,8 @@ RSGL shapes
 
 rect :: struct { x, y, w, h : c.float }
 cube :: struct { x, y, z, w, h, l : c.float }
-vec2D :: struct { x, y : c.float }
-vec3D :: struct { x, y, z : c.float }
+vec2D :: [2]f32
+vec3D :: [3]f32
 
 /*
 the color stucture is in
